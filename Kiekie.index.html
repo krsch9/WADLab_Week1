@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>KieKie | Handcrafted Sandwich Cookies</title>
+    <style>
+      :root {
+        --cream: #fff8ef;
+        --rose: #ff5d8f;
+        --berry: #a33c5f;
+        --sage: #5b7f6e;
+        --ink: #2b1c1b;
+        --shadow: 0 20px 50px rgba(43, 28, 27, 0.13);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        color: var(--ink);
+        background: linear-gradient(135deg, #fff5eb 0%, #ffe6f0 100%);
+        line-height: 1.6;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      .hero {
+        min-height: 100vh;
+        display: grid;
+        grid-template-columns: 1.2fr 0.8fr;
+        align-items: center;
+        gap: 2rem;
+        padding: 3rem 7vw 4rem;
+      }
+
+      .eyebrow {
+        text-transform: uppercase;
+        letter-spacing: 0.35em;
+        font-size: 0.8rem;
+        font-weight: 700;
+        color: var(--rose);
+        margin-bottom: 0.8rem;
+      }
+
+      h1 {
+        font-size: clamp(2.8rem, 5vw, 4.7rem);
+        margin: 0 0 0.6rem;
+        font-family: Georgia, "Times New Roman", serif;
+      }
+
+      .tagline {
+        font-size: clamp(1.05rem, 2vw, 1.25rem);
+        max-width: 640px;
+        margin-bottom: 1.4rem;
+        color: #5d3b3b;
+      }
+
+      .hero-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        margin-bottom: 1.1rem;
+      }
+
+      .btn,
+      .btn-secondary,
+      .quiz-option,
+      .submit-btn,
+      .back-btn {
+        border: none;
+        cursor: pointer;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+      }
+
+      .btn:hover,
+      .btn-secondary:hover,
+      .quiz-option:hover,
+      .submit-btn:hover,
+      .back-btn:hover {
+        transform: translateY(-2px);
+      }
+
+      .btn {
+        background: var(--rose);
+        color: white;
+        padding: 0.9rem 1.2rem;
+        border-radius: 999px;
+        font-weight: 700;
+        box-shadow: var(--shadow);
+      }
+
+      .btn-secondary {
+        background: rgba(255, 255, 255, 0.75);
+        color: var(--ink);
+        padding: 0.9rem 1.2rem;
+        border-radius: 999px;
+        font-weight: 600;
+      }
+
+      .hero-card {
+        background: rgba(255, 255, 255, 0.85);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(163, 60, 95, 0.14);
+        border-radius: 28px;
+        padding: 1.5rem;
+        box-shadow: var(--shadow);
+      }
+
+      .hero-card h3 {
+        margin-top: 0;
+        font-size: 1.2rem;
+      }
+
+      .hero-card ul {
+        padding-left: 1rem;
+        margin: 0.7rem 0 0;
+      }
+
+      .section {
+        padding: 2.2rem 7vw 3.2rem;
+      }
+
+      .section-title {
+        text-align: center;
+        margin-bottom: 1.4rem;
+      }
+
+      .section-title h2 {
+        font-size: clamp(1.7rem, 3vw, 2.2rem);
+        margin: 0 0 0.3rem;
+      }
+
+      .section-title p {
+        margin: 0 auto;
+        max-width: 680px;
+        color: #6f4d4d;
+      }
+
+      .quiz-card,
+      .contact-card,
+      .review-card,
+      .menu-card,
+      .result-card {
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 24px;
+        box-shadow: var(--shadow);
+      }
+
+      .quiz-card {
+        padding: 1.5rem;
+        max-width: 780px;
+        margin: 0 auto;
+      }
+
+      .quiz-progress {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1rem;
+        color: #7c5f5f;
+      }
+
+      .quiz-progress strong {
+        color: var(--berry);
+      }
+
+      .quiz-question {
+        font-size: 1.35rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+      }
+
+      .quiz-options {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0.8rem;
+      }
+
+      .quiz-option {
+        border: 1px solid #f1dbdd;
+        background: #fff9f8;
+        padding: 0.95rem 1rem;
+        border-radius: 16px;
+        text-align: left;
+        font-weight: 600;
+      }
+
+      .quiz-option:hover {
+        border-color: var(--rose);
+        background: #ffe8f0;
+      }
+
+      .quiz-actions {
+        display: flex;
+        justify-content: space-between;
+        gap: 0.8rem;
+        margin-top: 1rem;
+      }
+
+      .back-btn {
+        background: #f7e7eb;
+        color: var(--ink);
+        padding: 0.8rem 1rem;
+        border-radius: 999px;
+        font-weight: 600;
+      }
+
+      .result-card {
+        max-width: 780px;
+        margin: 1.1rem auto 0;
+        padding: 1.3rem 1.4rem;
+        border: 1px solid #f4dce3;
+      }
+
+      .result-card h3 {
+        margin: 0 0 0.5rem;
+      }
+
+      .result-card p {
+        margin: 0.3rem 0;
+      }
+
+      .hidden {
+        display: none;
+      }
+
+      .menu-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 1.2rem;
+      }
+
+      .menu-card {
+        overflow: hidden;
+      }
+
+      .menu-photo {
+        width: 100%;
+        height: 180px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, #ffe9f1 0%, #fff6e8 100%);
+      }
+
+      .menu-photo img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .menu-body {
+        padding: 1rem 1rem 1.2rem;
+      }
+
+      .menu-body h3 {
+        margin: 0 0 0.3rem;
+      }
+
+      .price {
+        color: var(--rose);
+        font-weight: 700;
+        margin-top: 0.6rem;
+      }
+
+      .review-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 1rem;
+      }
+
+      .review-card {
+        padding: 1.2rem;
+      }
+
+      .review-card .quote {
+        font-size: 1.05rem;
+        font-style: italic;
+        margin-bottom: 0.7rem;
+      }
+
+      .review-card .author {
+        font-weight: 700;
+        color: var(--berry);
+      }
+
+      .contact-layout {
+        display: grid;
+        grid-template-columns: 0.9fr 1.1fr;
+        gap: 1.2rem;
+        max-width: 1080px;
+        margin: 0 auto;
+      }
+
+      .contact-card {
+        padding: 1.3rem;
+      }
+
+      .contact-card p {
+        margin: 0.4rem 0;
+      }
+
+      form {
+        display: grid;
+        gap: 0.8rem;
+      }
+
+      label {
+        font-weight: 600;
+      }
+
+      input,
+      textarea,
+      select {
+        width: 100%;
+        padding: 0.8rem 0.9rem;
+        border: 1px solid #eed6de;
+        border-radius: 12px;
+        font: inherit;
+        background: #fffdfb;
+      }
+
+      textarea {
+        min-height: 110px;
+        resize: vertical;
+      }
+
+      .submit-btn {
+        background: var(--sage);
+        color: white;
+        padding: 0.85rem 1rem;
+        border-radius: 999px;
+        font-weight: 700;
+      }
+
+      .form-message {
+        margin-top: 0.3rem;
+        font-weight: 600;
+        color: var(--berry);
+      }
+
+      @media (max-width: 900px) {
+        .hero,
+        .contact-layout {
+          grid-template-columns: 1fr;
+        }
+
+        .menu-grid,
+        .review-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+
+      @media (max-width: 640px) {
+        .quiz-options,
+        .menu-grid,
+        .review-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .hero {
+          padding-top: 1.8rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="hero">
+      <div>
+        <p class="eyebrow">Boutique cookie studio</p>
+        <h1>KieKie</h1>
+        <p class="tagline">Handcrafted sandwich cookies for life's sweetest moments.</p>
+        <div class="hero-actions">
+          <a class="btn" href="#quiz">Find your perfect cookie</a>
+          <a class="btn-secondary" href="#menu">Browse the menu</a>
+        </div>
+        <p>Freshly baked • custom orders • gift-worthy boxes</p>
+      </div>
+      <div class="hero-card">
+        <h3>What makes us special</h3>
+        <ul>
+          <li>Soft, buttery cookies with luscious fillings</li>
+          <li>Custom flavors for birthdays, weddings, and milestones</li>
+          <li>Elegant gift boxes ready for every celebration</li>
+        </ul>
+      </div>
+    </header>
+
+    <main>
+      <section class="section" id="quiz">
+        <div class="section-title">
+          <h2>Find your perfect cookie in 3 quick steps</h2>
+          <p>Answer a few simple questions and we’ll suggest a cookie that feels made just for you.</p>
+        </div>
+
+        <div class="quiz-card">
+          <div class="quiz-progress">
+            <span>Step <strong id="stepNumber">1</strong> of 3</span>
+            <span id="stepLabel">Choose the occasion</span>
+          </div>
+          <div class="quiz-question" id="quizQuestion">What’s the occasion?</div>
+          <div class="quiz-options" id="quizOptions"></div>
+          <div class="quiz-actions">
+            <button class="back-btn hidden" id="backBtn">Back</button>
+            <span></span>
+          </div>
+        </div>
+
+        <div class="result-card hidden" id="resultCard"></div>
+      </section>
+
+      <section class="section" id="menu">
+        <div class="section-title">
+          <h2>Our signature cookies</h2>
+          <p>Each cookie is handcrafted in small batches with beautiful flavor pairings and dreamy fillings.</p>
+        </div>
+        <div class="menu-grid">
+          <article class="menu-card">
+            <div class="menu-photo">
+              <img src="data:image/svg+xml;utf8,<?xml version='1.0' encoding='UTF-8'?><svg xmlns='http://www.w3.org/2000/svg' width='400' height='260'><rect width='400' height='260' fill='%23fff4e8'/><circle cx='130' cy='115' r='70' fill='%23f6d3b0'/><circle cx='270' cy='115' r='70' fill='%23f7b7b3'/><rect x='90' y='82' width='220' height='100' rx='24' fill='%23fff9f3'/><rect x='120' y='108' width='160' height='52' rx='16' fill='%23ffd8a0'/><circle cx='205' cy='134' r='14' fill='%23ff7a88'/></svg>" alt="Vanilla cookie illustration" />
+            </div>
+            <div class="menu-body">
+              <h3>Classic Vanilla Glow</h3>
+              <p>Buttery vanilla cookies with silky cream and a touch of shimmer.</p>
+              <div class="price">$18 each</div>
+            </div>
+          </article>
+
+          <article class="menu-card">
+            <div class="menu-photo">
+              <img src="data:image/svg+xml;utf8,<?xml version='1.0' encoding='UTF-8'?><svg xmlns='http://www.w3.org/2000/svg' width='400' height='260'><rect width='400' height='260' fill='%23fff2e8'/><rect x='90' y='85' width='220' height='95' rx='24' fill='%23a45f3a'/><rect x='113' y='108' width='174' height='48' rx='16' fill='%23ffcf75'/><circle cx='200' cy='132' r='16' fill='%23fffaf1'/></svg>" alt="Chocolate cookie illustration" />
+            </div>
+            <div class="menu-body">
+              <h3>Chocolate Kiss Duo</h3>
+              <p>Deep chocolate cookies layered with salted caramel cream.</p>
+              <div class="price">$20 each</div>
+            </div>
+          </article>
+
+          <article class="menu-card">
+            <div class="menu-photo">
+              <img src="data:image/svg+xml;utf8,<?xml version='1.0' encoding='UTF-8'?><svg xmlns='http://www.w3.org/2000/svg' width='400' height='260'><rect width='400' height='260' fill='%23fff7ec'/><rect x='90' y='80' width='220' height='100' rx='24' fill='%23ffb4c7'/><rect x='112' y='105' width='176' height='50' rx='16' fill='%23ffe6ef'/><circle cx='200' cy='130' r='15' fill='%23c14d6b'/></svg>" alt="Rose cookie illustration" />
+            </div>
+            <div class="menu-body">
+              <h3>Rose Petal Velvet</h3>
+              <p>Elegant pink cookies with strawberry cream and a floral finish.</p>
+              <div class="price">$22 each</div>
+            </div>
+          </article>
+
+          <article class="menu-card">
+            <div class="menu-photo">
+              <img src="data:image/svg+xml;utf8,<?xml version='1.0' encoding='UTF-8'?><svg xmlns='http://www.w3.org/2000/svg' width='400' height='260'><rect width='400' height='260' fill='%23fff8e8'/><rect x='90' y='82' width='220' height='100' rx='24' fill='%23f9f2d3'/><rect x='118' y='106' width='164' height='50' rx='16' fill='%23ffd16f'/><circle cx='200' cy='131' r='14' fill='%23ff8a66'/></svg>" alt="Lemon cookie illustration" />
+            </div>
+            <div class="menu-body">
+              <h3>Lemon Sunshine</h3>
+              <p>Zesty lemon cookies filled with bright citrus buttercream.</p>
+              <div class="price">$19 each</div>
+            </div>
+          </article>
+
+          <article class="menu-card">
+            <div class="menu-photo">
+              <img src="data:image/svg+xml;utf8,<?xml version='1.0' encoding='UTF-8'?><svg xmlns='http://www.w3.org/2000/svg' width='400' height='260'><rect width='400' height='260' fill='%23fff2e7'/><rect x='90' y='82' width='220' height='100' rx='24' fill='%234c2e2e'/><rect x='116' y='106' width='168' height='50' rx='16' fill='%23a75d2b'/><circle cx='200' cy='131' r='13' fill='%23ffda8b'/></svg>" alt="Mocha cookie illustration" />
+            </div>
+            <div class="menu-body">
+              <h3>Midnight Mocha</h3>
+              <p>Chocolate cookies with espresso cream and a whisper of cocoa.</p>
+              <div class="price">$21 each</div>
+            </div>
+          </article>
+
+          <article class="menu-card">
+            <div class="menu-photo">
+              <img src="data:image/svg+xml;utf8,<?xml version='1.0' encoding='UTF-8'?><svg xmlns='http://www.w3.org/2000/svg' width='400' height='260'><rect width='400' height='260' fill='%23fff6e8'/><rect x='90' y='80' width='220' height='100' rx='24' fill='%23ffe7f0'/><rect x='112' y='104' width='176' height='52' rx='16' fill='%23ffdd8a'/><circle cx='200' cy='130' r='16' fill='%23ff5d8f'/></svg>" alt="Surprise cookie illustration" />
+            </div>
+            <div class="menu-body">
+              <h3>Surprise Box</h3>
+              <p>A rotating selection of our favorite seasonal flavors.</p>
+              <div class="price">$24 each</div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="reviews">
+        <div class="section-title">
+          <h2>What our customers say</h2>
+          <p>Lovely words from people who have celebrated with KieKie.</p>
+        </div>
+        <div class="review-grid">
+          <article class="review-card">
+            <p class="quote">“The cookies were as beautiful as they were delicious. Every guest asked where they came from.”</p>
+            <div class="author">— Mia & Theo</div>
+          </article>
+          <article class="review-card">
+            <p class="quote">“We ordered a custom box for our anniversary and it felt so personal and elegant.”</p>
+            <div class="author">— Nina, Brooklyn</div>
+          </article>
+          <article class="review-card">
+            <p class="quote">“The flavors are rich, the textures are perfect, and they make every moment feel special.”</p>
+            <div class="author">— Elena, Queens</div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="contact">
+        <div class="section-title">
+          <h2>Order your cookies</h2>
+          <p>Tell us what you need and we’ll help you choose the sweetest option for your next celebration.</p>
+        </div>
+        <div class="contact-layout">
+          <div class="contact-card">
+            <h3>Contact KieKie</h3>
+            <p><strong>Phone:</strong> (212) 555-0147</p>
+            <p><strong>Email:</strong> hello@kiekiebakery.com</p>
+            <p><strong>Hours:</strong> Mon–Sat, 8:00 AM – 6:00 PM</p>
+            <p><strong>Pickup & Delivery:</strong> Manhattan and nearby boroughs</p>
+          </div>
+
+          <div class="contact-card">
+            <form id="orderForm">
+              <label for="name">Name</label>
+              <input id="name" name="name" placeholder="Your name" required />
+
+              <label for="email">Email</label>
+              <input id="email" name="email" type="email" placeholder="you@example.com" required />
+
+              <label for="phone">Phone</label>
+              <input id="phone" name="phone" placeholder="(555) 123-4567" required />
+
+              <label for="date">Date needed</label>
+              <input id="date" name="date" type="date" required />
+
+              <label for="message">Order details</label>
+              <textarea id="message" name="message" placeholder="Share your celebration, guest count, and flavor ideas." required></textarea>
+
+              <button class="submit-btn" type="submit">Request an order</button>
+              <div class="form-message" id="formMessage"></div>
+            </form>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script>
+      const quizSteps = [
+        {
+          key: "occasion",
+          question: "What’s the occasion?",
+          options: ["Birthday", "Wedding", "Anniversary", "Just Because"]
+        },
+        {
+          key: "flavor",
+          question: "What flavor are you craving?",
+          options: ["Chocolate", "Vanilla", "Red Velvet", "Lemon", "Surprise Me"]
+        },
+        {
+          key: "budget",
+          question: "What fits your budget?",
+          options: ["Under $50", "$50-$100", "$100-$200", "$200+"]
+        }
+      ];
+
+      const answers = {};
+      let stepIndex = 0;
+      const stepNumber = document.getElementById("stepNumber");
+      const stepLabel = document.getElementById("stepLabel");
+      const quizQuestion = document.getElementById("quizQuestion");
+      const quizOptions = document.getElementById("quizOptions");
+      const backBtn = document.getElementById("backBtn");
+      const resultCard = document.getElementById("resultCard");
+
+      function renderQuestion() {
+        const currentStep = quizSteps[stepIndex];
+        stepNumber.textContent = stepIndex + 1;
+        stepLabel.textContent = currentStep.question;
+        quizQuestion.textContent = currentStep.question;
+        quizOptions.innerHTML = "";
+
+        currentStep.options.forEach((option) => {
+          const button = document.createElement("button");
+          button.className = "quiz-option";
+          button.textContent = option;
+          button.addEventListener("click", () => {
+            answers[currentStep.key] = option;
+            if (stepIndex < quizSteps.length - 1) {
+              stepIndex += 1;
+              backBtn.classList.remove("hidden");
+              renderQuestion();
+            } else {
+              showRecommendation();
+            }
+          });
+          quizOptions.appendChild(button);
+        });
+
+        backBtn.classList.toggle("hidden", stepIndex === 0);
+      }
+
+      function showRecommendation() {
+        const occasion = answers.occasion || "Just Because";
+        const flavor = answers.flavor || "Surprise Me";
+        const budget = answers.budget || "Under $50";
+
+        let recommendation;
+
+        if (occasion === "Wedding") {
+          recommendation = {
+            name: "Rose Petal Velvet",
+            description: "An elegant cookie for a celebration filled with grace, soft floral notes, and dreamy cream.",
+            price: "$22 each"
+          };
+        } else if (occasion === "Anniversary") {
+          recommendation = {
+            name: "Chocolate Kiss Duo",
+            description: "A romantic, rich chocolate cookie that feels intimate and indulgent.",
+            price: "$20 each"
+          };
+        } else if (occasion === "Birthday") {
+          recommendation = {
+            name: "Classic Vanilla Glow",
+            description: "Bright, cheerful, and festive — perfect for candles, smiles, and party energy.",
+            price: "$18 each"
+          };
+        } else if (flavor === "Lemon") {
+          recommendation = {
+            name: "Lemon Sunshine",
+            description: "Fresh, sunny, and cheerful for a simple treat that still feels special.",
+            price: "$19 each"
+          };
+        } else if (flavor === "Chocolate") {
+          recommendation = {
+            name: "Midnight Mocha",
+            description: "Bold and cozy, made for chocolate lovers who want something rich and memorable.",
+            price: "$21 each"
+          };
+        } else if (flavor === "Red Velvet") {
+          recommendation = {
+            name: "Rose Petal Velvet",
+            description: "Velvety, pretty, and made to feel a little extra luxurious.",
+            price: "$22 each"
+          };
+        } else if (budget === "$200+") {
+          recommendation = {
+            name: "Surprise Box",
+            description: "A premium tasting box that lets you explore several of our favorite signature flavors.",
+            price: "$24 each"
+          };
+        } else {
+          recommendation = {
+            name: "Surprise Box",
+            description: "A delightful mix of seasonal favorites chosen just for your mood and budget.",
+            price: "$24 each"
+          };
+        }
+
+        quizQuestion.textContent = "Your perfect match";
+        quizOptions.innerHTML = "";
+        stepLabel.textContent = "We found a cookie for you";
+        stepNumber.textContent = "3";
+        backBtn.classList.add("hidden");
+
+        resultCard.innerHTML = `
+          <h3>${recommendation.name}</h3>
+          <p>${recommendation.description}</p>
+          <p><strong>Budget fit:</strong> ${budget}</p>
+          <p><strong>Price:</strong> ${recommendation.price}</p>
+          <p>Perfect for ${occasion.toLowerCase()} and a ${flavor.toLowerCase()} mood.</p>
+          <br />
+          <button class="btn" onclick="resetQuiz()">Take the quiz again</button>
+        `;
+        resultCard.classList.remove("hidden");
+      }
+
+      function resetQuiz() {
+        stepIndex = 0;
+        Object.keys(answers).forEach((key) => delete answers[key]);
+        resultCard.classList.add("hidden");
+        resultCard.innerHTML = "";
+        renderQuestion();
+      }
+
+      backBtn.addEventListener("click", () => {
+        if (stepIndex > 0) {
+          stepIndex -= 1;
+          renderQuestion();
+        }
+      });
+
+      document.getElementById("orderForm").addEventListener("submit", function (event) {
+        event.preventDefault();
+        const messageBox = document.getElementById("formMessage");
+        messageBox.textContent = "Thank you! We’ll reach out shortly to confirm your order and delivery details.";
+        this.reset();
+      });
+
+      renderQuestion();
+    </script>
+  </body>
+</html>
